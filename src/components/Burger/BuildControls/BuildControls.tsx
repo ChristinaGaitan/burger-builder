@@ -10,14 +10,17 @@ const controls = [
 ]
 
 interface Props {
-
+  ingredianteAdded: Function
 }
 
 const BuildControls = (props: Props) => (
   <div className={classes.BuildControls}>
     {
       controls.map(control => (
-        <BuildControl key={control.label} label={control.label} />
+        <BuildControl
+          key={control.label}
+          label={control.label}
+          added={() => props.ingredianteAdded(control.type)} />
       ))
     }
   </div>
