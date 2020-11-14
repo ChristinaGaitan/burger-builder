@@ -13,6 +13,7 @@ interface Props {
   price: number
   ingredientAdded: Function
   ingredientRemoved: Function
+  purchasable: boolean
   disabled: {
     [key: string]: boolean
   }
@@ -31,6 +32,8 @@ const BuildControls = (props: Props) => (
           disabled={props.disabled[control.type]} />
       ))
     }
+
+    <button disabled={props.purchasable} className={classes.OrderButton}>ORDER NOW</button>
   </div>
 )
 

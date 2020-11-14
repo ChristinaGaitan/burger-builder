@@ -14,6 +14,7 @@ interface IngredientesDisabled {
 interface State {
   ingredients: Ingredientes,
   totalPrice: number
+  purchaseable: boolean
 }
 
 const INGREDIENT_PRICES: Ingredientes = {
@@ -31,8 +32,19 @@ class BurgerBuilder extends Component {
       cheese: 0,
       meat: 0
     },
-    totalPrice: 4
+    totalPrice: 4,
+    purchaseable: false
   } as State
+
+  updatePurchaseState = () => {
+    const ingredients = { ...this.state.ingredients }
+
+    const sum = Object.keys(ingredients).map(ingredientKey => {
+      return ingredients[ingredientKey]
+    }).reduce((sum, el) => { return sum + el; }, 0)
+
+    this.setState({purchaseable: sum > 0})
+  }
 
   addIngrediantHandler = (type: keyof State) => {
     const oldCount = this.state.ingredients[type];
@@ -48,6 +60,8 @@ class BurgerBuilder extends Component {
     this.setState({
       totalPrice: newPrice,
       ingredients: updatedIngredients
+    }, () => {
+      this.updatePurchaseState()
     })
   }
 
@@ -68,6 +82,8 @@ class BurgerBuilder extends Component {
     this.setState({
       totalPrice: newPrice,
       ingredients: updatedIngredients
+    }, () => {
+      this.updatePurchaseState()
     })
   }
 
@@ -85,6 +101,7 @@ class BurgerBuilder extends Component {
             ingredientAdded={this.addIngrediantHandler}
             ingredientRemoved={this.removeIngrediantHandler}
             disabled={disabledInfo}
+            purchasable={!this.state.purchaseable}
             price={this.state.totalPrice}
              />
       </Aux>
