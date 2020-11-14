@@ -2,22 +2,24 @@ import React, { Component } from 'react'
 import Aux from '../../hoc/Aux'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
+import Modal from '../../components/UI/Modal/Modal'
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 
-interface Ingredientes {
+interface Ingrediente {
   [key: string]: number
 }
 
-interface IngredientesDisabled {
+interface IngredienteDisabled {
   [key: string]: boolean
 }
 
 interface State {
-  ingredients: Ingredientes,
+  ingredients: Ingrediente,
   totalPrice: number
   purchaseable: boolean
 }
 
-const INGREDIENT_PRICES: Ingredientes = {
+const INGREDIENT_PRICES: Ingrediente = {
   salad: 0.5,
   cheese: 0.4,
   meat: 1.3,
@@ -88,7 +90,7 @@ class BurgerBuilder extends Component {
   }
 
   render() {
-    const disabledInfo: IngredientesDisabled = {}
+    const disabledInfo: IngredienteDisabled = {}
 
     for (let key in this.state.ingredients) {
       disabledInfo[key] = this.state.ingredients[key] <= 0
@@ -96,14 +98,18 @@ class BurgerBuilder extends Component {
 
     return (
       <Aux>
-          <Burger ingredients={this.state.ingredients} />
-          <BuildControls
-            ingredientAdded={this.addIngrediantHandler}
-            ingredientRemoved={this.removeIngrediantHandler}
-            disabled={disabledInfo}
-            purchasable={!this.state.purchaseable}
-            price={this.state.totalPrice}
-             />
+        <Modal>
+          <OrderSummary ingredients={this.state.ingredients} />
+        </Modal>
+
+        <Burger ingredients={this.state.ingredients} />
+        <BuildControls
+          ingredientAdded={this.addIngrediantHandler}
+          ingredientRemoved={this.removeIngrediantHandler}
+          disabled={disabledInfo}
+          purchasable={!this.state.purchaseable}
+          price={this.state.totalPrice}
+            />
       </Aux>
     )
   }
