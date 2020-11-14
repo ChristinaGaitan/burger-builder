@@ -3,7 +3,20 @@ import Aux from '../../hoc/Aux'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 
-const INGREDIENT_PRICES = {
+interface Ingredientes {
+  [key: string]: number
+}
+
+interface IngredientesDisabled {
+  [key: string]: boolean
+}
+
+interface State {
+  ingredients: Ingredientes,
+  totalPrice: number
+}
+
+const INGREDIENT_PRICES: Ingredientes = {
   salad: 0.5,
   cheese: 0.4,
   meat: 1.3,
@@ -19,9 +32,9 @@ class BurgerBuilder extends Component {
       meat: 0
     },
     totalPrice: 4
-  }
+  } as State
 
-  addIngrediantHandler = (type) => {
+  addIngrediantHandler = (type: keyof State) => {
     const oldCount = this.state.ingredients[type];
     const updatedCount = oldCount + 1;
 
@@ -29,7 +42,7 @@ class BurgerBuilder extends Component {
     updatedIngredients[type] = updatedCount;
 
     const priceAddition = INGREDIENT_PRICES[type];
-    const oldPrice = this.setState.totalPrice;
+    const oldPrice = this.state.totalPrice;
     const newPrice = oldPrice + priceAddition;
 
     this.setState({
@@ -38,7 +51,7 @@ class BurgerBuilder extends Component {
     })
   }
 
-  removeIngrediantHandler = (type) => {
+  removeIngrediantHandler = (type: keyof State) => {
     const oldCount = this.state.ingredients[type];
 
     if(oldCount <= 0) { return; }
@@ -49,7 +62,7 @@ class BurgerBuilder extends Component {
     updatedIngredients[type] = updatedCount;
 
     const priceDeduction = INGREDIENT_PRICES[type];
-    const oldPrice = this.setState.totalPrice;
+    const oldPrice = this.state.totalPrice;
     const newPrice = oldPrice + priceDeduction;
 
     this.setState({
@@ -59,12 +72,10 @@ class BurgerBuilder extends Component {
   }
 
   render() {
-    const disabledInfo = {
-      ...this.state.ingredients
-    }
+    const disabledInfo: IngredientesDisabled = {}
 
-    for (let key in disabledInfo) {
-      disabledInfo[key] = disabledInfo[key] <= 0
+    for (let key in this.state.ingredients) {
+      disabledInfo[key] = this.state.ingredients[key] <= 0
     }
 
     return (
