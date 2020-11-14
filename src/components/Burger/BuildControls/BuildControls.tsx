@@ -10,7 +10,11 @@ const controls = [
 ]
 
 interface Props {
-  ingredianteAdded: Function
+  ingredientAdded: Function
+  ingredientRemoved: Function
+  disabled: {
+    [key: string]: boolean
+  }
 }
 
 const BuildControls = (props: Props) => (
@@ -20,7 +24,9 @@ const BuildControls = (props: Props) => (
         <BuildControl
           key={control.label}
           label={control.label}
-          added={() => props.ingredianteAdded(control.type)} />
+          added={() => props.ingredientAdded(control.type)}
+          removed={() => props.ingredientRemoved(control.type)}
+          disabled={props.disabled[control.type]} />
       ))
     }
   </div>
