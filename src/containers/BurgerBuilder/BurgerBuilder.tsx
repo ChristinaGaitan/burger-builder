@@ -17,6 +17,7 @@ interface State {
   ingredients: Ingrediente,
   totalPrice: number
   purchaseable: boolean
+  purchasing: boolean
 }
 
 const INGREDIENT_PRICES: Ingrediente = {
@@ -35,8 +36,15 @@ class BurgerBuilder extends Component {
       meat: 0
     },
     totalPrice: 4,
-    purchaseable: false
+    purchaseable: false,
+    purchasing: false
   } as State
+
+  purchaseHandler = () => {
+    this.setState({
+      purchasing: true
+    })
+  }
 
   updatePurchaseState = () => {
     const ingredients = { ...this.state.ingredients }
@@ -98,7 +106,7 @@ class BurgerBuilder extends Component {
 
     return (
       <Aux>
-        <Modal>
+        <Modal show={this.state.purchasing}>
           <OrderSummary ingredients={this.state.ingredients} />
         </Modal>
 
@@ -109,7 +117,7 @@ class BurgerBuilder extends Component {
           disabled={disabledInfo}
           purchasable={!this.state.purchaseable}
           price={this.state.totalPrice}
-            />
+          ordered={this.purchaseHandler} />
       </Aux>
     )
   }
