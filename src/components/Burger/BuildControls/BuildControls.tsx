@@ -10,6 +10,7 @@ const controls = [
 ]
 
 interface Props {
+  price: number
   ingredientAdded: Function
   ingredientRemoved: Function
   disabled: {
@@ -19,6 +20,7 @@ interface Props {
 
 const BuildControls = (props: Props) => (
   <div className={classes.BuildControls}>
+    <p>Current price: <strong>{props.price.toFixed(2)}</strong> </p>
     {
       controls.map(control => (
         <BuildControl
