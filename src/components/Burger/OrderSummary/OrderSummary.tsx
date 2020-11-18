@@ -7,6 +7,7 @@ interface Ingrediente {
 }
 
 interface Props {
+  price: number
   ingredients: Ingrediente
   purchaseCancel: () => void
   purchaseContinue: () => void
@@ -27,7 +28,7 @@ const OrderSummary = (props: Props) => {
       <ul>
         { ingredientsSummary }
       </ul>
-
+      <p><strong>Total Price: {props.price.toFixed(2)}</strong></p>
       <p>Continue to Checkout?</p>
       <Button buttonType='Danger' clicked={props.purchaseCancel}>CANCEL</Button>
       <Button buttonType='Success' clicked={props.purchaseContinue}>CONTINUE</Button>
