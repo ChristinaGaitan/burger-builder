@@ -1,15 +1,19 @@
 import React from 'react'
 import Aux from '../../hoc/Aux'
 import classes from './Layout.module.css'
+import Toolbar from '../Navigation/Toolbar/Toolbar'
 
-const layout = (props) => {
-  return(
+interface Props {
+  children: any
+}
+
+const Layout = (props: Props) => (
   <Aux>
-    <div>Toolbar, SideDrawer, Backdrop</div>
+    <Toolbar />
     <main className={classes.Content}>
       {props.children}
     </main>
   </Aux>
-)}
+)
 
-export default layout;
+export default Layout;
