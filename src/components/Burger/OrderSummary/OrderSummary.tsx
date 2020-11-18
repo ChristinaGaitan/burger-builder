@@ -1,5 +1,6 @@
 import React from 'react'
 import Aux from '../../../hoc/Aux'
+import Button from '../../UI/Button/Button'
 
 interface Ingrediente {
   [key: string]: number
@@ -7,6 +8,8 @@ interface Ingrediente {
 
 interface Props {
   ingredients: Ingrediente
+  purchaseCancel: () => void
+  purchaseContinue: () => void
 }
 
 const OrderSummary = (props: Props) => {
@@ -26,6 +29,8 @@ const OrderSummary = (props: Props) => {
       </ul>
 
       <p>Continue to Checkout?</p>
+      <Button buttonType='Danger' clicked={props.purchaseCancel}>CANCEL</Button>
+      <Button buttonType='Success' clicked={props.purchaseContinue}>CONTINUE</Button>
     </Aux>
   )
 }
