@@ -11,9 +11,7 @@ const Toolbar = (props: Props) => (
   <header className={classes.Toolbar}>
     <div>MENU</div>
     <Logo />
-    <nav>
-      ...
-    </nav>
+    <NavigationItems />
   </header>
 )
 
