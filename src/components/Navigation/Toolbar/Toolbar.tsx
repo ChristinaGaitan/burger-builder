@@ -10,7 +10,7 @@ interface Props {
 const Toolbar = (props: Props) => (
   <header className={classes.Toolbar}>
     <div>MENU</div>
-    <Logo />
+    <Logo height='80%' />
     <NavigationItems />
   </header>
 )
