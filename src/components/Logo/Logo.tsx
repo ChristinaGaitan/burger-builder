@@ -3,7 +3,7 @@ import burgerLogo from '../../assets/images/burger-logo.png' // Returns an strin
 import classes from './Logo.module.css'
 
 interface Props {
-  height: string
+  height?: string
 }
 
 const Logo = (props: Props) => (
