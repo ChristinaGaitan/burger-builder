@@ -14,7 +14,7 @@ interface Props {
 
 class Layout extends Component<Props, State> {
   state = {
-    showSideDrawer: true
+    showSideDrawer: false
   } as State
 
   sideDrawerCloseHandler = () => {
