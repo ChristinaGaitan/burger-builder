@@ -14,9 +14,9 @@ interface Props {
 }
 
 class OrderSummary extends Component<Props> {
-  componentDidUpdate() {
-    console.log('========== Order Summery will update')
-  }
+  // componentDidUpdate() {
+  //   console.log('========== Order Summery will update')
+  // }
 
   render() {
     const ingredientsSummary = Object.keys(this.props.ingredients).map((ingredientKey) => {
