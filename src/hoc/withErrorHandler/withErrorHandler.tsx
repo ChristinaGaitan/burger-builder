@@ -13,6 +13,9 @@ interface State {
 
 const withErrorHandler = <Props extends object>(WrappedComponent: ComponentType<Props>, axios: AxiosInstance) => {
   return class extends Component<Props, State> {
+    requestInterceptor: any = null
+    responseInterceptor: any = null
+
     state = {
       error: null
     } as State
@@ -20,16 +23,21 @@ const withErrorHandler = <Props extends object>(WrappedComponent: ComponentType<
     // TODO: Avoid using componentWillMount, I need to find a way of setting state
     // before component renders for the first time
     componentWillMount = () => {
-      axios.interceptors.request.use(request => {
+      this.requestInterceptor = axios.interceptors.request.use(request => {
         this.setState({error: null})
         return request
       })
 
-      axios.interceptors.response.use(response => {
+      this.responseInterceptor = axios.interceptors.response.use(response => {
         return response;
       }, error => {
         this.setState({ error: error })
       })
+    }
+
+    componentWillUnmount = () => {
+      axios.interceptors.request.eject(this.requestInterceptor)
+      axios.interceptors.response.eject(this.responseInterceptor)
     }
 
     errorConfirmHandler = () => {
