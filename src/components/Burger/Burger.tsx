@@ -1,9 +1,18 @@
 import React from 'react'
 import classes from './Burger.module.css'
 import BurgerIngredient from './BurgerIngridients/BurgerIngredient'
+interface Ingrediente {
+  [key: string]: number
+}
 
-const burger = (props) => {
-  let transformedIngredients = Object.keys(props.ingredients)
+interface Props {
+  ingredients: Ingrediente
+}
+
+const burger = (props: Props) => {
+  let transformedIngredients: any
+
+  transformedIngredients = Object.keys(props.ingredients)
     .map(ingredientKey => {
       return [...Array(props.ingredients[ingredientKey])]
       .map((_, index) => {
