@@ -7,6 +7,7 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import axios from '../../axios-orders'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 interface Ingrediente {
   [key: string]: number
@@ -25,6 +26,10 @@ interface State {
   error: boolean
 }
 
+interface Props extends RouteComponentProps{
+
+}
+
 const INGREDIENT_PRICES: Ingrediente = {
   salad: 0.5,
   cheese: 0.4,
@@ -32,7 +37,7 @@ const INGREDIENT_PRICES: Ingrediente = {
   bacon: 0.7
 }
 
-class BurgerBuilder extends Component {
+class BurgerBuilder extends Component<Props> {
   state = {
     ingredients: null,
     totalPrice: 4,
@@ -43,6 +48,7 @@ class BurgerBuilder extends Component {
   } as State
 
   componentDidMount() {
+    console.log('=========== this.props', this.props)
     axios.get('https://react-my-burger-lcgt.firebaseio.com/ingredients.json')
     .then(response => {
       this.setState({
@@ -69,35 +75,36 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler = () => {
-    this.setState({loading: true})
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: 'Christina Gaitan',
-        address: {
-          street: 'Teststreet 1',
-          zipCode: '12345',
-          country: 'Germany'
-        },
-        emai: 'test@test.com'
-      },
-      delivery: 'fastest'
-    }
+    this.props.history.push('/checkout')
+    // this.setState({loading: true})
+    // const order = {
+    //   ingredients: this.state.ingredients,
+    //   price: this.state.totalPrice,
+    //   customer: {
+    //     name: 'Christina Gaitan',
+    //     address: {
+    //       street: 'Teststreet 1',
+    //       zipCode: '12345',
+    //       country: 'Germany'
+    //     },
+    //     emai: 'test@test.com'
+    //   },
+    //   delivery: 'fastest'
+    // }
 
-    axios.post('/orders.json', order)
-    .then(response =>
-      this.setState({
-        loading: false,
-        purchasing: false
-      })
-    )
-    .catch(error =>
-      this.setState({
-        loading: false,
-        purchasing: false
-      })
-    )
+    // axios.post('/orders.json', order)
+    // .then(response =>
+    //   this.setState({
+    //     loading: false,
+    //     purchasing: false
+    //   })
+    // )
+    // .catch(error =>
+    //   this.setState({
+    //     loading: false,
+    //     purchasing: false
+    //   })
+    // )
   }
 
   updatePurchaseState = () => {
