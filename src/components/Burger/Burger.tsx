@@ -1,18 +1,16 @@
 import React from 'react'
 import classes from './Burger.module.css'
 import BurgerIngredient from './BurgerIngridients/BurgerIngredient'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 interface Ingrediente {
   [key: string]: number
 }
 
-interface Props extends RouteComponentProps<any> {
+interface Props {
   ingredients: Ingrediente
 }
 
 const burger = (props: Props) => {
-  console.log('============ props', props)
   let transformedIngredients: any
 
   transformedIngredients = Object.keys(props.ingredients)
@@ -39,4 +37,4 @@ const burger = (props: Props) => {
   );
 }
 
-export default withRouter(burger);
+export default burger;
