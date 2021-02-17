@@ -3,11 +3,19 @@ import { RouteComponentProps } from 'react-router-dom'
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
 
+interface Ingrediente {
+  [key: string]: number
+}
+
 interface Props extends RouteComponentProps {
 
 }
 
-class Checkout extends Component<Props> {
+interface State {
+  ingredients: Ingrediente
+}
+
+class Checkout extends Component<Props, State> {
   state = {
     ingredients: {
       salad: 1,
@@ -15,6 +23,18 @@ class Checkout extends Component<Props> {
       cheese: 1,
       bacon: 1
     }
+  } as State
+
+  componentDidMount() {
+    const paramsString = this.props.history.location.search
+    const searchParams = new URLSearchParams(paramsString);
+
+    const ingredients: Ingrediente = {}
+    for(let param of searchParams.entries()) {
+      ingredients[param[0]] = parseInt(param[1])
+    }
+
+    this.setState({ingredients: ingredients})
   }
 
   checkoutCancelledHandler = () => {
