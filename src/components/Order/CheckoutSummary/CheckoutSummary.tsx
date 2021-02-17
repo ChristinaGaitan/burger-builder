@@ -9,6 +9,8 @@ interface Ingrediente {
 
 interface Props {
   ingredients: Ingrediente
+  checkoutCancelled: () => void
+  checkoutContinued: () => void
 }
 
 const CheckoutSummary = (props: Props) => {
@@ -18,8 +20,8 @@ const CheckoutSummary = (props: Props) => {
       <div style={{ width: '100%', margin: 'auto' }}>
         <Burger ingredients={props.ingredients} />
       </div>
-      <Button clicked={()=>{}} buttonType='Danger'>CANCEL</Button>
-      <Button clicked={()=>{}} buttonType='Success'>CONTINUE</Button>
+      <Button clicked={props.checkoutCancelled} buttonType='Danger'>CANCEL</Button>
+      <Button clicked={props.checkoutContinued} buttonType='Success'>CONTINUE</Button>
     </div>
   )
 }
