@@ -1,8 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component, MouseEvent } from 'react'
 import Button from '../.../../../../components/UI/Button/Button'
 import classes from './ContactData.module.css'
 
-class ContactData extends Component {
+interface Ingrediente {
+  [key: string]: number
+}
+
+interface Props {
+  ingredients: Ingrediente
+}
+
+class ContactData extends Component<Props> {
   state = {
     name: '',
     email: '',
@@ -10,6 +18,11 @@ class ContactData extends Component {
       street: '',
       postalCode: ''
     }
+  }
+
+  orderHandler = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    console.log('========= ingredients', this.props.ingredients)
   }
 
   render() {
@@ -21,7 +34,7 @@ class ContactData extends Component {
           <input className={classes.Input} type='email' name='email' placeholder='Your email' />
           <input className={classes.Input} type='text' name='street' placeholder='Street' />
           <input className={classes.Input} type='text' name='postal' placeholder='Postal Code' />
-          <Button buttonType='Success' clicked={()=>{}}>ORDER</Button>
+          <Button buttonType='Success' clicked={this.orderHandler}>ORDER</Button>
         </form>
       </div>
     )
