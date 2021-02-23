@@ -1,13 +1,15 @@
 import React, { Component, MouseEvent } from 'react'
 import Button from '../.../../../../components/UI/Button/Button'
 import classes from './ContactData.module.css'
+import axios from '../../../axios-orders'
 
 interface Ingrediente {
   [key: string]: number
 }
 
 interface Props {
-  ingredients: Ingrediente
+  ingredients: Ingrediente,
+  totalPrice: number
 }
 
 class ContactData extends Component<Props> {
@@ -17,12 +19,41 @@ class ContactData extends Component<Props> {
     address: {
       street: '',
       postalCode: ''
-    }
+    },
+    ingredients: {},
+    totalPrice: 0
   }
 
   orderHandler = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    console.log('========= ingredients', this.props.ingredients)
+    this.setState({loading: true})
+
+    const order = {
+      ingredients: this.props.ingredients,
+      price: this.props.totalPrice,
+      customer: {
+        name: 'Christina Gaitan',
+        address: {
+          street: 'Teststreet 1',
+          zipCode: '12345',
+          country: 'Germany'
+        },
+        emai: 'test@test.com'
+      },
+      delivery: 'fastest'
+    }
+
+    axios.post('/orders.json', order)
+    .then(response =>
+      this.setState({
+        loading: false
+      })
+    )
+    .catch(error =>
+      this.setState({
+        loading: false
+      })
+    )
   }
 
   render() {

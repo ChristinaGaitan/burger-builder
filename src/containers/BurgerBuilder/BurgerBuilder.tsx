@@ -76,7 +76,7 @@ class BurgerBuilder extends Component<Props> {
 
   purchaseContinueHandler = () => {
 
-    const queryParams = []
+    const queryParams = [`totalPrice=${this.state.totalPrice}`]
     for (let ingredient in this.state.ingredients) {
       queryParams.push(encodeURIComponent(ingredient)+'=' + encodeURIComponent(this.state.ingredients[ingredient]))
     }

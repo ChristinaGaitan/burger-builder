@@ -14,28 +14,30 @@ interface Props extends RouteComponentProps {
 
 interface State {
   ingredients: Ingrediente
+  totalPrice: number
 }
 
 class Checkout extends Component<Props, State> {
   state = {
-    ingredients: {
-      salad: 1,
-      meat: 1,
-      cheese: 1,
-      bacon: 1
-    }
+    ingredients: {},
+    totalPrice: 0
   } as State
 
-  componentDidMount() {
+  componentWillMount() {
     const paramsString = this.props.history.location.search
     const searchParams = new URLSearchParams(paramsString);
 
     const ingredients: Ingrediente = {}
+    let price = 0
     for(let param of searchParams.entries()) {
-      ingredients[param[0]] = parseInt(param[1])
+      if(param[0] === 'totalPrice') {
+        price = parseFloat(param[1])
+      } else {
+        ingredients[param[0]] = parseInt(param[1])
+      }
     }
 
-    this.setState({ingredients: ingredients})
+    this.setState({ingredients: ingredients, totalPrice: price})
   }
 
   checkoutCancelledHandler = () => {
@@ -54,7 +56,7 @@ class Checkout extends Component<Props, State> {
           checkoutContinued={this.checkoutContinuedHandler}
         />
         <Route path={this.props.match.path + '/contact-data'}
-          render={() => (<ContactData ingredients={this.state.ingredients} />)} />
+          render={() => (<ContactData ingredients={this.state.ingredients} totalPrice={this.state.totalPrice} />)} />
       </div>
     )
   }
