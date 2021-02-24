@@ -1,6 +1,7 @@
 import React, { Component, MouseEvent } from 'react'
 import Button from '../.../../../../components/UI/Button/Button'
 import classes from './ContactData.module.css'
+import Spinner from '../../../components/UI/Spinner/Spinner'
 import axios from '../../../axios-orders'
 
 interface Ingrediente {
@@ -21,7 +22,8 @@ class ContactData extends Component<Props> {
       postalCode: ''
     },
     ingredients: {},
-    totalPrice: 0
+    totalPrice: 0,
+    loading: false
   }
 
   orderHandler = (event: MouseEvent<HTMLButtonElement>) => {
@@ -57,16 +59,24 @@ class ContactData extends Component<Props> {
   }
 
   render() {
+    let form = (
+      <form>
+        <input className={classes.Input} type='text' name='name' placeholder='Your name' />
+        <input className={classes.Input} type='email' name='email' placeholder='Your email' />
+        <input className={classes.Input} type='text' name='street' placeholder='Street' />
+        <input className={classes.Input} type='text' name='postal' placeholder='Postal Code' />
+        <Button buttonType='Success' clicked={this.orderHandler}>ORDER</Button>
+      </form>
+    )
+
+    if (this.state.loading) {
+      form = <Spinner />
+    }
+
     return (
       <div className={classes.ContactData}>
         <h4>Enter your Contact Data</h4>
-        <form>
-          <input className={classes.Input} type='text' name='name' placeholder='Your name' />
-          <input className={classes.Input} type='email' name='email' placeholder='Your email' />
-          <input className={classes.Input} type='text' name='street' placeholder='Street' />
-          <input className={classes.Input} type='text' name='postal' placeholder='Postal Code' />
-          <Button buttonType='Success' clicked={this.orderHandler}>ORDER</Button>
-        </form>
+        { form }
       </div>
     )
   }
