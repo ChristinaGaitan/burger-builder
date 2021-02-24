@@ -3,12 +3,13 @@ import Button from '../.../../../../components/UI/Button/Button'
 import classes from './ContactData.module.css'
 import Spinner from '../../../components/UI/Spinner/Spinner'
 import axios from '../../../axios-orders'
+import { RouteComponentProps } from 'react-router-dom'
 
 interface Ingrediente {
   [key: string]: number
 }
 
-interface Props {
+interface Props extends RouteComponentProps{
   ingredients: Ingrediente,
   totalPrice: number
 }
@@ -46,11 +47,13 @@ class ContactData extends Component<Props> {
     }
 
     axios.post('/orders.json', order)
-    .then(response =>
+    .then(response =>{
       this.setState({
         loading: false
       })
-    )
+
+      this.props.history.push('/')
+    })
     .catch(error =>
       this.setState({
         loading: false
