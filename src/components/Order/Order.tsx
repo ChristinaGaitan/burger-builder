@@ -1,5 +1,5 @@
 import React from 'react'
-import classes from './Orders.module.css';
+import classes from './Order.module.css'
 
 interface Props {
 
